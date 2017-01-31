@@ -1,6 +1,4 @@
 ﻿using Amazon.SQS;
-using Newtonsoft.Json;
-using System.IO;
 
 namespace SqsPublisherSubscriber.Common
 {
