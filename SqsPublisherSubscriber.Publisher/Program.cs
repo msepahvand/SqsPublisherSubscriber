@@ -1,5 +1,4 @@
-﻿using Amazon.SQS;
-using SqsPublisherSubscriber.Common;
+﻿using SqsPublisherSubscriber.Common;
 using System;
 
 namespace SqsPublisherSubscriber.Publisher
@@ -8,24 +7,22 @@ namespace SqsPublisherSubscriber.Publisher
     {
         static void Main(string[] args)
         {
-
-            var config = SqsConfigHelper.GetConfig();
-
-            var queueUrl = $"https://sqs.{config.RegionDisplayName}.amazonaws.com/{config.AccountNumber}/{config.QueueName}";
-            var _client = new AmazonSQSClient(
-                    awsAccessKeyId: config.AccessKeyId,
-                    awsSecretAccessKey: config.SecretAccessKey,
-                    region: Amazon.RegionEndpoint.GetBySystemName(config.RegionDisplayName));
+            var _client = SqsClientFactory.GetClient();
 
             try
             {
-                var response = _client.SendMessage(queueUrl, $"Hello {DateTime.Now}");
+                var response = _client.SendMessage(SqsConfigHelper.Config.QueueUrl,
+                    $"Hello {DateTime.Now}");
+
+                Console.WriteLine(response.HttpStatusCode);
             }
             catch (Exception ex)
             {
-                
+                Console.WriteLine(ex.Message);
             }
-            
+
+            Console.ReadKey();
+
         }
     }
 }

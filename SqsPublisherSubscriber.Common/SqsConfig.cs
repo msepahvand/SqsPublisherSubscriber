@@ -7,5 +7,13 @@
         public string AccessKeyId { get; set; }
         public string SecretAccessKey { get; set; }
         public string RegionDisplayName { get; set; }
+
+        public string QueueUrl
+        {
+            get
+            {
+               return $"https://sqs.{RegionDisplayName}.amazonaws.com/{AccountNumber}/{QueueName}";
+            }
+        }
     }
 }

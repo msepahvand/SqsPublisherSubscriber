@@ -3,15 +3,24 @@ using System.IO;
 
 namespace SqsPublisherSubscriber.Common
 {
-    public class SqsConfigHelper
+    public static class SqsConfigHelper
     {
-        public static SqsConfig GetConfig()
+        private static SqsConfig _config;
+        public static SqsConfig Config
+        {
+            get
+            {
+                return _config ?? GetConfig();
+            }
+        }
+
+        private static SqsConfig GetConfig()
         {
             using (StreamReader r = new StreamReader("sqs-config.json"))
             {
                 string json = r.ReadToEnd();
-                var config = JsonConvert.DeserializeObject<SqsConfig>(json);
-                return config;
+                _config = JsonConvert.DeserializeObject<SqsConfig>(json);
+                return _config;
             }
         }
     }
