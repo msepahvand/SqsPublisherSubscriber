@@ -12,9 +12,9 @@ namespace SqsPublisherSubscriber.Subscriber
 
             try
             {
-                var request = new ReceiveMessageRequest(SqsConfigHelper.Config.QueueUrl) { MaxNumberOfMessages = 10};
+                var request = new ReceiveMessageRequest(SqsConfigHelper.Config.QueueUrl) { MaxNumberOfMessages = 10, WaitTimeSeconds = 20 };
                 var response = _client.ReceiveMessage(request);
-                response.Messages.ForEach(x=>Console.WriteLine(x.Body));
+                response.Messages.ForEach(x => Console.WriteLine(x.Body));
             }
             catch (Exception ex)
             {
